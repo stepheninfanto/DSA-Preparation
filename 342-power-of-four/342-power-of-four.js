@@ -12,6 +12,6 @@ var isPowerOfFour = function(n) {
             break;
         }
         i++;
-        }
+    }
     return false;
 };
