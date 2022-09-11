@@ -10,19 +10,35 @@
  * @param {TreeNode} root
  * @return {number[]}
  */
-
-    
-    
-function inn(root,res){
-    if(root==null) return;       
-    inn(root.left,res);
-    res.push(root.val);
-    inn(root.right,res);
-}
-    
 var inorderTraversal = function(root) {
-    var res =[];
-    inn(root,res);
-    return res;
 
+
+    let node = root;
+    const res =[];
+    while(node){
+        if(!node.left){
+            res.push(node.val);
+            node = node.right;
+        }else{
+            const pred = findRightLeafOfLeftSubTree(node);
+            if(pred.right===node){ // cycle exists 
+                pred.right=null;
+                res.push(node.val);
+                node=node.right;
+            }else{//create a cycle
+                pred.right=node;
+                node=node.left;
+            }
+        }
+    }
+    
+    return res;
 };
+
+function findRightLeafOfLeftSubTree(root){
+    let node = root.left;
+    while(node.right && node.right!==root){
+        node= node.right;
+    }
+    return node;
+}
