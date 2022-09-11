@@ -10,30 +10,27 @@
  * @param {ListNode} list2
  * @return {ListNode}
  */
-var mergeTwoLists = function(l1, l2) {
-    let list = new ListNode();
-    let head = list;
+var mergeTwoLists = function(list1, list2) {
+    let dummy = new ListNode(null, null);
+    let tail = dummy;
     
-    while (l1 !== null && l2 !== null){
-        if (l1.val < l2.val) {
-            list.next = new ListNode(l1.val)
-            l1 = l1.next
-        } else {
-            list.next = new ListNode(l2.val)
-            l2 = l2.next
-        }
-        
-        list = list.next
+    while(list1 && list2){
+        if(list1.val < list2.val){
+            tail.next = list1;
+            list1 = list1.next;
+        } else{
+            tail.next = list2;
+            list2 = list2.next;
+        }        
+        tail = tail.next;
     }
     
-	// It's possible that one linked list is shorter than the other so we just
-	// add on the remainder of the last linked list. It's already sorted :)
-    if (l1 !== null)
-        list.next = l1
-    if (l2 !== null)
-        list.next = l2
+    if(list1){
+        tail.next = list1;
+    } else if(list2){
+        tail.next = list2;
+    }
     
-	// return .next because this first element in the linkedlist is empty
-    return head.next
+    return dummy.next;
     
 };
